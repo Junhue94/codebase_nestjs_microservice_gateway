@@ -19,7 +19,7 @@ const bootstrap = async () => {
     const app = await NestFactory.create(ApplicationModule);
     app.use(middleware);
     app.useGlobalFilters(new HttpExceptionFilter());
-    await app.listen(8300, () => logger.info(`Server started on http://${config.host}:${config.port}`));
+    await app.listen(config.port, () => logger.info(`Server started on http://${config.host}:${config.port}`));
 };
 
 bootstrap();

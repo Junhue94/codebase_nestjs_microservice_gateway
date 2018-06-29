@@ -46,7 +46,27 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-node_modules
-.idea
-.idea/
-src/config
+# dependencies
+/node_modules
+
+# IDE
+/.idea
+/.awcache
+/.vscode
+
+# misc
+npm-debug.log
+
+# example
+/quick-start
+
+# tests
+/test
+/coverage
+/.nyc_output
+
+# dist
+/dist
+
+# config
+/src/config

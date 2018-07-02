@@ -68,5 +68,6 @@ npm-debug.log
 # dist
 /dist
 
-# config
-/src/config
+# configurations
+/config
+/migrations/config.json

@@ -6,15 +6,12 @@ module.exports = {
                 primaryKey: true,
                 autoIncrement: true
             },
-            type: {
-                type: Sequelize.ENUM,
-                values: [
-                    'Current',
-                    'Watchlist',
-                    'Partial Exit',
-                    'Exited'
-                ]
-            },
+            type: Sequelize.ENUM(
+                'Current',
+                'Watchlist',
+                'Partial Exit',
+                'Exited'
+            ),
             entryDate: Sequelize.DATE,
             exitDate: Sequelize.DATE,
             name: Sequelize.STRING,
@@ -62,12 +59,25 @@ module.exports = {
             isDeleted: Sequelize.BOOLEAN
         });
     },
-    
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('Stock');
+        const { sequelize } = queryInterface;
+
+        return sequelize.transaction(t => {
+            // Drop table
+            return queryInterface.dropTable('Stock')
+                // Drop enums
+                .then(() => {
+                    return sequelize.query("DROP TYPE IF EXISTS \"enum_Stock_type\";", { transaction: t });
+                })
+                .then(() => {
+                    return sequelize.query("DROP TYPE IF EXISTS \"enum_Stock_sector\";", { transaction: t });
+                })
+                .then(() => {
+                    return sequelize.query("DROP TYPE IF EXISTS \"enum_Stock_country\";", { transaction: t });
+                })
+                .then(() => {
+                    return sequelize.query("DROP TYPE IF EXISTS \"enum_Stock_currency\";", { transaction: t });
+                })
+        });
     }
 };
-
-// TODO Add ENum
-// https://stackoverflow.com/questions/45437924/drop-and-create-enum-with-sequelize-correctly
-// https://github.com/sequelize/sequelize/issues/2554

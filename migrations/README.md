@@ -19,7 +19,7 @@
 
 
 # Generates a new seed file
-- sequelize seed:generate
+- sequelize seed:generate --name demo-user
 
 # Run specified seeder
 - sequelize db:seed
